@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Assessment Empresarial — Aliá Consultoria</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --verde:#0f4c5c;--verde2:#1a6b80;--verde-bg:#e8f2f5;
+  --rosa:#b46b89;--rosa-bg:#f5eaf0;
+  --cinza:#f4f4f2;--borda:#e0e0dc;--texto:#1a1a1a;--muted:#6b7280;
+  --r:10px;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--cinza);color:var(--texto);min-height:100vh;}
+.wrap{max-width:800px;margin:0 auto;padding:2rem 1rem 4rem;}
+
+.header{background:var(--verde);border-radius:14px;padding:2rem 2.5rem;margin-bottom:1.5rem;position:relative;overflow:hidden;}
+.header::after{content:'';position:absolute;right:-50px;top:-50px;width:180px;height:180px;border-radius:50%;background:var(--rosa);opacity:0.15;}
+.header-tag{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--rosa);margin-bottom:.4rem;}
+.header h1{font-family:'DM Serif Display',serif;font-size:1.65rem;color:#fff;margin-bottom:.4rem;line-height:1.2;}
+.header p{font-size:13px;color:rgba(255,255,255,0.6);line-height:1.6;}
+
+.prog-bar{background:#fff;border-radius:12px;padding:.9rem 1.25rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:1rem;border:.5px solid var(--borda);}
+.prog-track{flex:1;height:5px;background:var(--borda);border-radius:3px;overflow:hidden;}
+.prog-fill{height:100%;background:var(--rosa);border-radius:3px;transition:width .4s ease;}
+.prog-label{font-size:12px;color:var(--muted);white-space:nowrap;font-weight:500;}
+.dots{display:flex;gap:4px;}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--borda);transition:background .2s;}
+.dot.active{background:var(--verde);}
+.dot.done{background:var(--rosa);}
+
+.card{background:#fff;border-radius:14px;border:.5px solid var(--borda);padding:1.5rem 2rem;margin-bottom:1rem;}
+.sec-title{font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--rosa);margin-bottom:.3rem;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--borda);line-height:1.6;}
+.sec-div{margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:1px solid var(--borda);}
+
+.field{margin-bottom:1.5rem;}
+.field:last-child{margin-bottom:0;}
+.field label{display:block;font-size:13px;font-weight:500;color:var(--texto);margin-bottom:.6rem;line-height:1.5;}
+.req{color:var(--rosa);}
+.field input[type=text],.field input[type=email],.field input[type=tel],.field textarea{
+  width:100%;padding:.6rem .9rem;font-size:14px;font-family:'DM Sans',sans-serif;
+  border:1px solid var(--borda);border-radius:var(--r);background:var(--cinza);
+  color:var(--texto);outline:none;transition:border-color .2s;
+}
+.field input:focus,.field textarea:focus{border-color:var(--verde);background:#fff;}
+.field textarea{resize:vertical;min-height:90px;}
+
+.radio-group{display:flex;flex-direction:column;gap:7px;}
+.ropt{
+  display:flex;align-items:flex-start;gap:10px;padding:10px 13px;
+  border:1px solid var(--borda);border-radius:8px;cursor:pointer;
+  background:var(--cinza);transition:all .15s;font-size:13px;line-height:1.5;
+}
+.ropt:hover{border-color:var(--verde);background:var(--verde-bg);}
+.ropt.sel{border-color:var(--verde);background:var(--verde-bg);color:var(--verde);font-weight:500;}
+.rdot{width:17px;height:17px;border-radius:50%;border:2px solid var(--borda);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.ropt.sel .rdot{border-color:var(--verde);background:var(--verde);}
+.ropt.sel .rdot::after{content:'';width:6px;height:6px;border-radius:50%;background:#fff;}
+
+.toggle-group{display:flex;gap:8px;}
+.topt{
+  flex:1;padding:.7rem 1rem;border:1px solid var(--borda);border-radius:8px;
+  cursor:pointer;font-size:13px;font-weight:500;text-align:center;
+  background:var(--cinza);transition:all .15s;
+}
+.topt:hover{border-color:var(--verde);color:var(--verde);}
+.topt.sel{background:var(--verde);color:#fff;border-color:var(--verde);}
+.topt.sel-no{background:var(--rosa);color:#fff;border-color:var(--rosa);}
+
+.nav{display:flex;justify-content:space-between;align-items:center;margin-top:1.5rem;gap:1rem;}
+.btn{padding:.65rem 1.5rem;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;transition:all .15s;font-family:'DM Sans',sans-serif;border:none;}
+.btn-out{background:#fff;border:1px solid var(--borda);color:var(--muted);}
+.btn-out:hover{border-color:var(--verde);color:var(--verde);}
+.btn-pri{background:var(--verde);color:#fff;}
+.btn-pri:hover{background:var(--verde2);}
+.btn-exp{background:var(--rosa);color:#fff;}
+.btn-exp:hover{opacity:.9;}
+
+.block-card{background:#fff;border-radius:14px;border:.5px solid var(--borda);padding:2.5rem 2rem;text-align:center;}
+.block-icon{width:52px;height:52px;background:var(--rosa-bg);border-radius:50%;margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;}
+.block-icon svg{width:26px;height:26px;stroke:var(--rosa);}
+.block-card h2{font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--rosa);margin-bottom:.6rem;}
+.block-card p{font-size:13px;color:var(--muted);line-height:1.7;max-width:440px;margin:0 auto 1.25rem;}
+
+.success-card{background:#fff;border-radius:14px;border:.5px solid var(--borda);padding:2.5rem 2rem;text-align:center;}
+.ok-icon{width:52px;height:52px;background:var(--verde);border-radius:50%;margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;}
+.ok-icon svg{width:26px;height:26px;}
+.success-card h2{font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--verde);margin-bottom:.5rem;}
+.success-card p{font-size:13px;color:var(--muted);margin-bottom:1.5rem;line-height:1.6;}
+
+.sending{opacity:.6;pointer-events:none;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="header-tag">Aliá Consultoria</div>
+    <h1>Assessment Empresarial</h1>
+    <p>Avaliação de maturidade organizacional em três dimensões: Estratégia, Processos e Pessoas. Responda de forma objetiva, refletindo a realidade atual da empresa.</p>
+  </div>
+
+  <div class="prog-bar">
+    <div class="dots" id="dots"></div>
+    <div class="prog-track"><div class="prog-fill" id="pFill" style="width:14%"></div></div>
+    <div class="prog-label" id="pLabel">Seção 1 de 6</div>
+  </div>
+
+  <div id="formArea"></div>
+
+  <div class="nav">
+    <button class="btn btn-out" id="btnBack" onclick="goBack()" style="display:none">← Voltar</button>
+    <div></div>
+    <button class="btn btn-pri" id="btnNext" onclick="goNext()">Próximo →</button>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+const A = {};
+const FORMSPREE = 'https://formspree.io/f/mkokarwj';
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwfNaI_UM7-qFgtkgVJNYJQr0FuljNR6mS2IHRUK33nLr2qAmoZrDuOR7i0rDsAFwi9Ig/exec';
+
+const sections = [
+  {
+    id:'consent', title:'Boas-vindas', desc:null,
+    fields:[
+      {id:'email', label:'E-mail', type:'email', req:true},
+      {id:'consent', label:'Autorizo o uso das informações fornecidas exclusivamente para preparar minha devolutiva do assessment e para contato relacionado a este serviço. Retenção: até 12 meses. Para solicitar correção ou exclusão: contato@consultoriaalia.com.br', type:'toggle', req:true}
+    ]
+  },
+  {
+    id:'ident', title:'Identificação & Perfil', desc:'Nos conte um pouco sobre a empresa.',
+    fields:[
+      {id:'empresa', label:'Nome da empresa', type:'text', req:true},
+      {id:'nome', label:'Seu nome', type:'text', req:true},
+      {id:'tel', label:'Telefone para contato', type:'tel', req:true},
+      {id:'segmento', label:'Segmento de mercado', type:'radio', req:true, opts:['Serviços B2B','Serviços B2C','Comércio','Logística / Transporte','Alimentação','Construção civil / Manutenção predial','Tecnologia / Software / SaaS','Outro']},
+      {id:'tempo', label:'Tempo de existência da empresa', type:'radio', req:true, opts:['Menos de 6 meses','6–12 meses','1–2 anos','3–5 anos','6–10 anos','Mais de 10 anos']},
+      {id:'fat', label:'Faturamento bruto anual', type:'radio', req:true, opts:['Até R$ 240 mil','R$ 240 mil – R$ 360 mil','R$ 360 mil – R$ 1,2 milhão','R$ 1,2 – R$ 2,4 milhões','R$ 2,4 – R$ 4,8 milhões','R$ 4,8 – R$ 10 milhões','Prefiro não informar']},
+      {id:'colab', label:'Número de colaboradores', type:'radio', req:true, opts:['1 (apenas o(a) proprietário(a))','2–4','5–9','10–19','20–49','50–99','100+']},
+      {id:'como_soube', label:'Como / Por quem teve conhecimento deste assessment?', type:'text', req:true}
+    ]
+  },
+  {
+    id:'estrat', title:'Como está a Estratégia da sua empresa?', desc:'Selecione a opção que mais se enquadra na realidade atual da sua empresa.',
+    fields:[
+      {id:'q1', label:'1. A empresa possui planejamento estratégico formalizado e revisado anualmente.', type:'radio', req:true, opts:[
+        'Não há plano. Decisões no dia a dia, sem metas escritas ou prioridades definidas.',
+        'Há direção geral (ex.: visão e 2–3 prioridades) informal, sem métricas e sem calendário de revisão.',
+        'Documento simples com missão/visão, 3–5 metas anuais e iniciativas dos próximos 90 dias.',
+        'Plano anual geral e rituais de acompanhamento trimestral.',
+        'Plano anual com cenários, desdobramento por área e indicadores críticos com rituais de acompanhamento trimestrais.',
+        'Não sei responder / Não se aplica'
+      ]},
+      {id:'q2', label:'2. Existem metas de receita, margem e crescimento claras e acompanhadas.', type:'radio', req:true, opts:[
+        'Não há metas definidas (receita, margem, crescimento) e/ou seu acompanhamento é informal.',
+        'As metas são gerais (sem métricas estabelecidas).',
+        'Metas numéricas mensais (receita, margem, crescimento) com revisão mensal e ações reativas quando há desvios.',
+        'Metas numéricas mensais com revisão semanal e ações reativas quando há desvios.',
+        'Metas por canal/produto, com previsão (forecast), revisão semanal e decisões estratégicas baseadas nos números.',
+        'Não sei responder / Não se aplica'
+      ]},
+      {id:'q3', label:'3. Os líderes comunicam a estratégia aos colaboradores.', type:'radio', req:true, opts:[
+        'Não comunicam.',
+        'Comunicam pontualmente sem nenhuma estrutura.',
+        'Comunicam pontualmente de maneira pouco estruturada.',
+        'Comunicam regularmente de maneira pouco estruturada.',
+        'Comunicam regularmente de maneira totalmente estruturada.',
+        'Não sei responder / Não se aplica'
+      ]},
+      {id:'q4', label:'4. A empresa investe em inovação e novos produtos/serviços.', type:'radio', req:true, opts:[
+        'Não investe.',
+        'Investe esporadicamente, porém de forma pouco estruturada.',
+        'Investe regularmente, com algumas práticas consistentes.',
+        'Investe regularmente e com monitoramento regular sobre retorno.',
+        'Investe continuamente e com total alinhamento à estratégia.',
+        'Não sei responder / Não se aplica'
+      ]},
+      {id:'q4a', label:'Qual é a aposta central da empresa para os próximos 12 meses e por que ela é a mais importante agora?', type:'textarea', req:false},
+      {id:'q4b', label:'Liste seus 3 KPIs estratégicos e para cada um, informe fórmula de cálculo, meta (12 meses), valor atual e periodicidade de revisão.', type:'textarea', req:false}
+    ]
+  },
+  {
+    id:'proc', title:'Como estão os Processos da sua empresa?', desc:'Selecione a opção que mais se enquadra na realidade atual da sua empresa.',
+    fields:[
+      {id:'q5', label:'5. Os processos críticos estão documentados e padronizados.', type:'radio', req:true, opts:[
+        'Não existe documentação.',
+        'Alguns processos estão documentados, porém de maneiras diferentes.',
+        'A maioria dos processos estão documentados, porém de maneiras diferentes.',
+        'A maioria dos processos estão documentados e também padronizados.',
+        'Todos os processos estão documentados e padronizados.',
+        'Não sei responder / Não se aplica'
+      ]},
+      {id:'q6', label:'6. A operação é eficiente, com baixa ocorrência de erros/retrabalho.', type:'radio', req:true, opts:[
+        'Pouco eficiente, com alta ocorrência de erros.',
+        'Parcialmente eficiente, com alta ocorrência de erros.',
+        'Parcialmente eficiente, com baixa ocorrência de erros.',
+        'Eficiente, com média ocorrência de erros.',
+        'Muito eficiente, com mínima ocorrência de erros.',
+        'Não sei responder / Não se aplica'
+      ]},
+      {id:'q7', label:'7. A empresa faz uso de tecnologia/sistemas para suportar suas operações.', type:'radio', req:true, opts:[
+        'Rotina majoritariamente manual com utilização de planilhas.',
+        'Existem 1 ou 2 sistemas para as tarefas-chave sem integração entre si.',
+        'Existem alguns sistemas integrados entre si, porém ainda com trabalho manual.',
+        'Os sistemas estão integrados e geram dashboards automáticos para tomada de decisão.',
+        'Os sistemas estão integrados e com modelos preditivos.',
+        'Não sei responder / Não se aplica'
+      ]},
+      {id:'q8', label:'8. Existem indicadores de desempenho (KPIs) monitorados regularmente.', type:'radio', req:true, opts:[
+        'Não há KPIs definidos.',
+        'Alguns números são acompanhados de vez em quando, sem metas, sem periodicidade e sem responsável.',
+        'Conjunto pequeno de KPIs (2–5) com revisão mensal em planilha, com metas simples e um responsável por compilar.',
+        'Painel/planilha com KPIs por área, metas e responsáveis claros, revisão semanal/quinzenal e planos de ação quando há desvio.',
+        'Mapa de KPIs alinhado à estratégia, atualização automática, alertas de desvio, ownership por indicador e ciclo de melhoria contínua.',
+        'Não sei responder / Não se aplica'
+      ]},
+      {id:'q8a', label:'Quais etapas críticas do seu serviço/produto nunca podem falhar — e onde hoje ocorrem mais atritos / erros?', type:'textarea', req:false},
+      {id:'q8b', label:'Quais são até 5 KPIs operacionais críticos monitorados em sua empresa (ex.: lead time, % retrabalho/erro, OTIF, SLA de atendimento, custo por pedido)?', type:'textarea', req:false}
+    ]
+  },
+  {
+    id:'pessoas', title:'Como estão as Pessoas da sua empresa?', desc:null,
+    fields:[
+      {id:'q9', label:'9. Há uma estrutura organizacional clara e bem comunicada.', type:'radio', req:true, opts:[
+        'Não há estrutura. Papéis e responsabilidades variam, reporte muda e as decisões são centralizadas no dono.',
+        'Há noção de "quem faz o quê", mas sem descrições formais.',
+        'Organograma simples (2–3 níveis) e descrições resumidas de função com responsabilidades principais.',
+        'Organograma divulgado com descrições de cargo atualizadas.',
+        'Estrutura orientada a processos/equipes com governança definida/divulgada e ritos de gestão estabelecidos.',
+        'Não sei responder / Não se aplica'
+      ]},
+      {id:'q10', label:'10. O nível de engajamento e satisfação dos colaboradores é monitorado.', type:'radio', req:true, opts:[
+        'Não há medição. Percepções informais, sem canal de escuta estruturado e sem registro de ações.',
+        'Conversas pontuais ou formulários esporádicos sem periodicidade nem anonimato.',
+        'Pesquisa simples (ex.: Google Forms) regulares ou eNPS com acompanhamento de resultados e definição de plano de ação.',
+        'Pesquisa estruturada + eNPS, anonimato garantido, resultados consolidados.',
+        'Pesquisa estruturada + eNPS, anonimato garantido, resultados consolidados e follow-up de plano de ação.',
+        'Não sei responder / Não se aplica'
+      ]},
+      {id:'q11', label:'11. A empresa investe em treinamento e capacitação regularmente.', type:'radio', req:true, opts:[
+        'Não há orçamento nem plano e o aprendizado ocorre "no dia a dia", sem registro.',
+        'Treinamentos pontuais quando surge a necessidade, com materiais "soltos" (PDF/YouTube/WhatsApp).',
+        'Onboarding de novos colaboradores estruturado e plano de treinamentos periódico.',
+        'Estágio anterior + registro dos treinamentos realizados e conteúdos organizados para acesso on demand.',
+        'Estágio anterior + KPIs monitorados.',
+        'Não sei responder / Não se aplica'
+      ]},
+      {id:'q12', label:'12. Existe gestão de desempenho com avaliações e feedback estruturados.', type:'radio', req:true, opts:[
+        'Não há metas claras nem critérios de avaliação. Feedback só quando há problema, sem registro.',
+        'Metas gerais (ex.: "vender mais", "reduzir erros") sem periodicidade de avaliação. Feedbacks esporádicos.',
+        'Metas SMART individuais acompanhadas com revisão mensal/trimestral e rotina estabelecida 1:1.',
+        'Estágio anterior + ciclo periódico de avaliação de comportamentos.',
+        'Estágio anterior + plano de desenvolvimento individual estabelecido e acompanhado.',
+        'Não sei responder / Não se aplica'
+      ]},
+      {id:'q12a', label:'Quais KPIs relacionados a colaboradores são monitorados na sua empresa (ex.: turnover, absenteísmo, eNPS, horas de treinamento/colab, produtividade por pessoa)?', type:'textarea', req:false},
+      {id:'q12b', label:'O que mais engaja e o que mais desengaja o time no dia a dia? Traga exemplos reais.', type:'textarea', req:false}
+    ]
+  },
+  {
+    id:'conclusao', title:'Conclusão do Assessment', desc:null,
+    fields:[
+      {id:'q13', label:'13. Fique à vontade para incluir qualquer informação que considere relevante para análise.', type:'textarea', req:false}
+    ]
+  }
+];
+
+const TOTAL = sections.length;
+let cur = 0;
+
+function renderDots() {
+  const c = document.getElementById('dots');
+  c.innerHTML = '';
+  sections.forEach(function(_,i) {
+    const d = document.createElement('div');
+    d.className = 'dot'+(i===cur?' active':i<cur?' done':'');
+    c.appendChild(d);
+  });
+}
+
+function updateProg() {
+  const pct = Math.round(((cur+1)/TOTAL)*100);
+  document.getElementById('pFill').style.width = pct+'%';
+  document.getElementById('pLabel').textContent = 'Seção '+(cur+1)+' de '+TOTAL;
+}
+
+function renderSection(idx) {
+  const s = sections[idx];
+  let html = '<div class="card"><div class="sec-title">'+s.title+'</div>';
+  if (s.desc) {
+    html += '<div class="sec-desc">'+s.desc+'</div>';
+  } else {
+    html += '<div class="sec-div"></div>';
+  }
+  s.fields.forEach(function(f) {
+    html += '<div class="field"><label>'+f.label+(f.req?'<span class="req"> *</span>':'')+'</label>';
+    if (f.type==='text'||f.type==='email'||f.type==='tel') {
+      html += '<input type="'+f.type+'" id="f_'+f.id+'" value="'+escHtml(A[f.id]||'')+'" oninput="A[\''+f.id+'\']=this.value">';
+    } else if (f.type==='textarea') {
+      html += '<textarea id="f_'+f.id+'" oninput="A[\''+f.id+'\']=this.value">'+escHtml(A[f.id]||'')+'</textarea>';
+    } else if (f.type==='radio') {
+      html += '<div class="radio-group">';
+      f.opts.forEach(function(o) {
+        const sel = A[f.id]===o;
+        const esc = o.replace(/'/g,"\\'");
+        html += '<div class="ropt'+(sel?' sel':'')+'" onclick="pickRadio(\''+f.id+'\',this,\''+esc+'\')"><div class="rdot"></div>'+o+'</div>';
+      });
+      html += '</div>';
+    } else if (f.type==='toggle') {
+      const v = A[f.id];
+      html += '<div class="toggle-group">'
+        +'<div class="topt'+(v==='Sim'?' sel':'')+'" onclick="pickToggle(\''+f.id+'\',\'Sim\',this)">Sim</div>'
+        +'<div class="topt'+(v==='Não'?' sel-no':'')+'" onclick="pickToggle(\''+f.id+'\',\'Não\',this)">Não</div>'
+        +'</div>';
+    }
+    html += '</div>';
+  });
+  html += '</div>';
+  document.getElementById('formArea').innerHTML = html;
+  updateProg(); renderDots();
+  document.getElementById('btnBack').style.display = cur>0?'block':'none';
+  const isLast = cur===TOTAL-1;
+  const nb = document.getElementById('btnNext');
+  nb.textContent = isLast ? 'Concluir e Enviar ✓' : 'Próximo →';
+  nb.className = isLast ? 'btn btn-exp' : 'btn btn-pri';
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function pickRadio(id, el, val) {
+  A[id] = val;
+  el.closest('.radio-group').querySelectorAll('.ropt').forEach(function(r){r.classList.remove('sel');});
+  el.classList.add('sel');
+}
+
+function pickToggle(id, val, el) {
+  A[id] = val;
+  el.parentElement.querySelectorAll('.topt').forEach(function(t){t.classList.remove('sel');t.classList.remove('sel-no');});
+  el.classList.add(val==='Sim'?'sel':'sel-no');
+}
+
+function goNext() {
+  const s = sections[cur];
+  for (var i=0; i<s.fields.length; i++) {
+    var f = s.fields[i];
+    if (f.req && !A[f.id]) {
+      alert('Por favor, preencha todos os campos obrigatórios (*).');
+      return;
+    }
+  }
+  if (cur===0 && A.consent==='Não') { showBlock(); return; }
+  if (cur===TOTAL-1) { submitForm(); return; }
+  cur++;
+  renderSection(cur);
+  window.scrollTo(0,0);
+}
+
+function goBack() {
+  if (cur>0){cur--;renderSection(cur);window.scrollTo(0,0);}
+}
+
+function showBlock() {
+  document.getElementById('formArea').innerHTML =
+    '<div class="block-card">'
+    +'<div class="block-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div>'
+    +'<h2>Não foi possível prosseguir</h2>'
+    +'<p>Para realizar este assessment, precisamos do seu consentimento para tratar os dados pessoais exclusivamente com a finalidade de preparar a sua devolutiva e fazer contato sobre este serviço.<br><br>Como você não autorizou, não registraremos suas respostas e o processo é encerrado aqui.<br><br>Se mudar de ideia, basta reiniciar o formulário e marcar "Sim".</p>'
+    +'<button class="btn btn-out" onclick="resetForm()">← Reiniciar</button>'
+    +'</div>';
+  document.getElementById('btnNext').style.display='none';
+  document.getElementById('btnBack').style.display='none';
+}
+
+function submitForm() {
+  const nb = document.getElementById('btnNext');
+  nb.textContent = 'Enviando...';
+  nb.classList.add('sending');
+
+  // Dados para Formspree (com acentos, para e-mail legível)
+  const data = {
+    '_subject': 'Novo Assessment — ' + (A.empresa||'Cliente') + ' | Aliá Consultoria',
+    'E-mail': A.email||'',
+    'Consentimento': A.consent||'',
+    'Nome da empresa': A.empresa||'',
+    'Nome': A.nome||'',
+    'Telefone': A.tel||'',
+    'Segmento': A.segmento||'',
+    'Tempo de existência': A.tempo||'',
+    'Faturamento bruto anual': A.fat||'',
+    'Número de colaboradores': A.colab||'',
+    'Como soube do assessment': A.como_soube||'',
+    '1. Planejamento estratégico': A.q1||'',
+    '2. Metas de receita/margem/crescimento': A.q2||'',
+    '3. Comunicação da estratégia': A.q3||'',
+    '4. Investimento em inovação': A.q4||'',
+    'Aposta central (12 meses)': A.q4a||'',
+    'KPIs estratégicos': A.q4b||'',
+    '5. Processos documentados': A.q5||'',
+    '6. Eficiência operacional': A.q6||'',
+    '7. Uso de tecnologia/sistemas': A.q7||'',
+    '8. KPIs operacionais': A.q8||'',
+    'Etapas críticas / atritos': A.q8a||'',
+    'KPIs operacionais críticos': A.q8b||'',
+    '9. Estrutura organizacional': A.q9||'',
+    '10. Engajamento dos colaboradores': A.q10||'',
+    '11. Treinamento e capacitação': A.q11||'',
+    '12. Gestão de desempenho': A.q12||'',
+    'KPIs de pessoas': A.q12a||'',
+    'O que engaja / desengaja o time': A.q12b||'',
+    '13. Informações adicionais': A.q13||'',
+    'Data/hora': new Date().toLocaleString('pt-BR')
+  };
+
+  // Dados para Google Sheets (sem acentos nas chaves)
+  const dataSheets = {
+    'E-mail': A.email||'',
+    'Consentimento': A.consent||'',
+    'Nome da empresa': A.empresa||'',
+    'Nome': A.nome||'',
+    'Telefone': A.tel||'',
+    'Segmento': A.segmento||'',
+    'Tempo de existencia': A.tempo||'',
+    'Faturamento bruto anual': A.fat||'',
+    'Numero de colaboradores': A.colab||'',
+    'Como soube do assessment': A.como_soube||'',
+    '1. Planejamento estrategico': A.q1||'',
+    '2. Metas de receita/margem/crescimento': A.q2||'',
+    '3. Comunicacao da estrategia': A.q3||'',
+    '4. Investimento em inovacao': A.q4||'',
+    'Aposta central (12 meses)': A.q4a||'',
+    'KPIs estrategicos': A.q4b||'',
+    '5. Processos documentados': A.q5||'',
+    '6. Eficiencia operacional': A.q6||'',
+    '7. Uso de tecnologia/sistemas': A.q7||'',
+    '8. KPIs operacionais': A.q8||'',
+    'Etapas criticas / atritos': A.q8a||'',
+    'KPIs operacionais criticos': A.q8b||'',
+    '9. Estrutura organizacional': A.q9||'',
+    '10. Engajamento dos colaboradores': A.q10||'',
+    '11. Treinamento e capacitacao': A.q11||'',
+    '12. Gestao de desempenho': A.q12||'',
+    'KPIs de pessoas': A.q12a||'',
+    'O que engaja / desengaja o time': A.q12b||'',
+    '13. Informacoes adicionais': A.q13||''
+  };
+
+  // Monta FormData para o Google Sheets (sem acentos nas chaves)
+  var formData = new URLSearchParams();
+  Object.keys(dataSheets).forEach(function(k) { formData.append(k, dataSheets[k]); });
+
+  // Envia para Formspree (e-mail)
+  var formspreeReq = fetch(FORMSPREE, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+    body: JSON.stringify(data)
+  });
+
+  // Envia para Google Sheets (form-urlencoded, no-cors)
+  var sheetsReq = fetch(SHEETS_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    body: formData
+  });
+
+  Promise.all([formspreeReq, sheetsReq])
+  .then(function(results) {
+    return results[0].json();
+  })
+  .then(function(r) {
+    if (r.ok) {
+      showSuccess();
+    } else {
+      alert('Ocorreu um erro ao enviar. Tente novamente.');
+      nb.textContent = 'Concluir e Enviar ✓';
+      nb.classList.remove('sending');
+    }
+  })
+  .catch(function() {
+    alert('Ocorreu um erro ao enviar. Verifique sua conexão e tente novamente.');
+    nb.textContent = 'Concluir e Enviar ✓';
+    nb.classList.remove('sending');
+  });
+}
+
+function showSuccess() {
+  document.getElementById('formArea').innerHTML =
+    '<div class="success-card">'
+    +'<div class="ok-icon"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>'
+    +'<h2>Assessment concluído!</h2>'
+    +'<p>Suas respostas foram enviadas com sucesso. Em breve a equipe da <strong>Aliá Consultoria</strong> entrará em contato com a sua devolutiva.</p>'
+    +'<button class="btn btn-out" onclick="resetForm()">Preencher novo assessment</button>'
+    +'</div>';
+  document.getElementById('btnNext').style.display='none';
+  document.getElementById('btnBack').style.display='none';
+  document.getElementById('pFill').style.width='100%';
+  document.getElementById('pLabel').textContent='Concluído';
+  renderDots();
+  window.scrollTo(0,0);
+}
+
+function resetForm() {
+  Object.keys(A).forEach(function(k){delete A[k];});
+  cur=0;
+  document.getElementById('btnNext').style.display='block';
+  renderSection(0);
+}
+
+renderSection(0);
+</script>
+</body>
+</html>
